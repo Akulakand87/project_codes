@@ -1,4 +1,4 @@
-# Python code for a password generator
+# Code for a password generator
 import random
 import string
 
