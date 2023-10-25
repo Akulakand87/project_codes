@@ -1,0 +1,55 @@
+#include <stdio.h>
+
+int checkEndianness() {
+  unsigned int num = 1;
+  char *ptr = (char *)&num;
+  if (*ptr == 1) {
+  return 1; // Little Endian
+  } else {
+  return 0; // Big Endian
+  }
+}
+
+void printBytes(char *ptr, int size) {
+  for (int i = 0; i < size; i++) {
+  printf("Byte %d: %02X\n", i, (unsigned char)ptr[i]);
+  }
+}
+
+void convertEndianness(char *ptr, int size) {
+  char temp;
+  int start = 0;
+  int end = size - 1;
+  while (start < end) {
+  temp = ptr[start];
+  ptr[start] = ptr[end];
+  ptr[end] = temp;
+  start++;
+  end--;
+  }
+}
+
+int main() {
+  unsigned int num;
+  printf("Enter a number: ");
+  scanf("%u", &num);
+
+  printf("\nOriginal Endianness:\n");
+  printBytes((char *)&num, sizeof(num));
+
+  int endianness = checkEndianness();
+
+  if (endianness) {
+  printf("\nHost machine is Little Endian.\n");
+  printf("\nConverting to Big Endian...\n");
+  convertEndianness((char *)&num, sizeof(num));
+  } else {
+  printf("\nHost machine is Big Endian.\n");
+  printf("\nConverting to Little Endian...\n");
+  convertEndianness((char *)&num, sizeof(num));
+  }
+
+  printf("\nNew Endiannessx:\n");
+  printBytes((char *)&num, sizeof(num));
+  return 0;
+}
