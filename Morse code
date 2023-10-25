@@ -1,0 +1,76 @@
+MORSE_CODE_DICT = {
+    "A": ".-",
+    "B": "-...",
+    "C": "-.-.",
+    "D": "-..",
+    "E": ".",
+    "F": "..-.",
+    "G": "--.",
+    "H": "....",
+    "I": "..",
+    "J": ".---",
+    "K": "-.-",
+    "L": ".-..",
+    "M": "--",
+    "N": "-.",
+    "O": "---",
+    "P": ".--.",
+    "Q": "--.-",
+    "R": ".-.",
+    "S": "...",
+    "T": "-",
+    "U": "..-",
+    "V": "...-",
+    "W": ".--",
+    "X": "-..-",
+    "Y": "-.--",
+    "Z": "--..",
+}
+
+
+def encode_morse_code(text):
+    """Encodes a text string into Morse code.
+
+    Args:
+        text: A string containing the text to be encoded.
+
+    Returns:
+        A string containing the encoded Morse code.
+    """
+
+    morse_code = ""
+    for character in text:
+        morse_code += MORSE_CODE_DICT[character] + " "
+    return morse_code
+
+
+def decode_morse_code(morse_code):
+    """Decodes a Morse code string into a text string.
+
+    Args:
+        morse_code: A string containing the Morse code to be decoded.
+
+    Returns:
+        A string containing the decoded text.
+    """
+
+    text = ""
+    for word in morse_code.split(" "):
+        for character, code in MORSE_CODE_DICT.items():
+            if code == word:
+                text += character
+                break
+    return text
+
+
+# Example usage:
+
+# Encode a text string into Morse code.
+encoded_morse_code = encode_morse_code("Hello, world!")
+
+# Decode the Morse code string back into a text string.
+decoded_text = decode_morse_code(encoded_morse_code)
+
+# Print the results.
+print("Encoded Morse code:", encoded_morse_code)
+print("Decoded text:", decoded_text)
