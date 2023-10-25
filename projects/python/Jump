@@ -1,0 +1,71 @@
+import pygame
+
+# Define some game constants
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
+PLAYER_SPEED = 5
+JUMP_FORCE = 10
+GRAVITY = 0.5
+
+# Initialize PyGame
+pygame.init()
+
+# Create the game screen
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+# Create the player sprite
+player = pygame.sprite.Sprite()
+player.image = pygame.Surface((20, 20))
+player.image.fill((255, 0, 0))
+player.rect = player.image.get_rect()
+player.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+
+# Create the ground sprite
+ground = pygame.sprite.Sprite()
+ground.image = pygame.Surface((SCREEN_WIDTH, 10))
+ground.image.fill((0, 255, 0))
+ground.rect = ground.image.get_rect()
+ground.rect.bottom = SCREEN_HEIGHT
+
+# Start the game loop
+while True:
+
+  # Process events
+  for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+      pygame.quit()
+      sys.exit()
+
+    # Handle keyboard input
+    if event.type == pygame.KEYDOWN:
+      if event.key == pygame.K_SPACE:
+        player.is_jumping = True
+
+  # Update the player's position
+  player.rect.x += player.speed
+  player.rect.y += player.velocity
+
+  # Apply gravity
+  player.velocity += GRAVITY
+
+  # Check if the player is on the ground
+  if player.rect.colliderect(ground):
+    player.velocity = 0
+    player.is_jumping = False
+
+  # Check if the player has fallen off the screen
+  if player.rect.top > SCREEN_HEIGHT:
+    player.rect.top = SCREEN_HEIGHT
+    player.velocity = 0
+
+  # Check if the player has reached the end of the screen
+  if player.rect.right > SCREEN_WIDTH:
+    player.rect.right = SCREEN_WIDTH
+
+  # Draw the game screen
+  screen.fill((0, 0, 0))
+  screen.blit(player.image, player.rect)
+  screen.blit(ground.image, ground.rect)
+
+  # Update the display
+  pygame.display.flip()
