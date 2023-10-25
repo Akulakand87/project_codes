@@ -1,0 +1,27 @@
+import textblob
+
+# Define a function to analyze the sentiment of a text
+def analyze_sentiment(text):
+  """
+  Analyzes the sentiment of a text using the TextBlob library.
+
+  Args:
+    text: A string containing the text to be analyzed.
+
+  Returns:
+    A tuple containing the polarity and subjectivity of the text.
+  """
+
+  blob = textblob.TextBlob(text)
+  polarity = blob.polarity
+  subjectivity = blob.subjectivity
+  return polarity, subjectivity
+
+# Example usage:
+
+text = "I love this new movie!"
+polarity, subjectivity = analyze_sentiment(text)
+
+# Print the results
+print("Polarity:", polarity)
+print("Subjectivity:", subjectivity)
